@@ -1,0 +1,26 @@
+﻿@model GestionRestaurants.Models.Restaurant
+
+@{
+    ViewData["Title"] = "Eliminar Restaurant";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Esta seguro que quiere eliminar el restaurant?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+    </dl>
+    
+    <form asp-action="Eliminar">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-default" asp-action="Index">Listado</a>
+    </form>
+</div>

@@ -8,64 +8,69 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionRestaurants.Controllers
 {
-    [Route("api/[controller]")]
     public class RestaurantsController : BaseController
     {
         public RestaurantsController(DbContext context) : base(context)
         {
         }
 
-        [HttpGet("[action]")]
-        public IEnumerable<Restaurant> Get()
+        public IActionResult Index()
         {
             var restaurants = _db.Set<Restaurant>();
-            return restaurants;
+            return View(restaurants);
         }
 
-        [HttpGet("[action]/{id}")]
-        public Restaurant Get(int id)
-        {
-            var restaurant = _db.Set<Restaurant>().SingleOrDefault(r => r.Id == id);            
-            return restaurant;
+        public IActionResult Nuevo()
+        {            
+            return View();
         }
 
-        [HttpPost("[action]")]
-        public bool Post([FromBody]Restaurant restaurant)
+        [HttpPost]
+        public IActionResult Nuevo(Restaurant restaurant)
         {
             if (ModelState.IsValid)
             {
                 _db.Add(restaurant);
                 _db.SaveChanges();
-                return true;
+                return RedirectToAction(nameof(Index));
             }            
-            return false;
+            return View(restaurant);
         }
 
-        [HttpPut("[action]")]
-        public bool Put([FromBody]Restaurant restaurant)
+        public IActionResult Editar(int id)
+        {
+            return View(_db.Set<Restaurant>().SingleOrDefault(r => r.Id == id));
+        }
+
+        [HttpPost]
+        public IActionResult Editar(Restaurant restaurant)
         {
             if (ModelState.IsValid)
             {
                 _db.Update(restaurant);
                 _db.SaveChanges();
-                return true;
+                return RedirectToAction(nameof(Index));
             }
-            return false;
+            return View(restaurant);
         }
 
-        [HttpDelete("[action]/{id}")]
-        public bool Delete(int id)
+        public IActionResult Eliminar(int id)
+        {
+            return View(_db.Set<Restaurant>().SingleOrDefault(r => r.Id == id));
+        }
+
+        public IActionResult Delete(int id)
         {
             try
             {
                 var restaurant = _db.Set<Restaurant>().SingleOrDefault(r => r.Id == id);
                 _db.Remove(restaurant);
                 _db.SaveChanges();
-                return true;
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                return false;
+                return RedirectToAction(nameof(Eliminar),new { id });
             }            
         }
     }

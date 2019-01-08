@@ -1,0 +1,34 @@
+﻿@model IEnumerable<GestionRestaurants.Models.Restaurant>
+
+@{
+    ViewData["Title"] = "Restaurants";
+}
+
+<h2>Listado de Restaurants</h2>
+
+<p>
+    <a class="btn btn-success" asp-action="Nuevo">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                <a class="btn btn-info" asp-action="Editar" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
+                <a class="btn btn-danger" asp-action="Eliminar" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
