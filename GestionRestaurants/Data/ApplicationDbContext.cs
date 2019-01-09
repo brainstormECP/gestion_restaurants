@@ -19,7 +19,7 @@ namespace GestionRestaurants.Data
             modelBuilder.Entity<Restaurant>();
             modelBuilder.Entity<Reserva>().HasOne(r => r.Restaurant).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<IndisponibilidadRestaurant>();
-            
+            modelBuilder.Entity<RestriccionDeReserva>();
             base.OnModelCreating(modelBuilder);
         }
 

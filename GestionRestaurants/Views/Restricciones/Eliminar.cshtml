@@ -1,0 +1,32 @@
+﻿@model GestionRestaurants.Models.RestriccionDeReserva
+
+@{
+    ViewData["Title"] = "Eliminar Restriccion";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Esta seguro que quiere eliminar la restriccion?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Restaurant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Restaurant.Nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DisponibilidadDeMesa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisponibilidadDeMesa)
+        </dd>
+    </dl>
+    
+    <form asp-action="Eliminar">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-default" asp-action="Index">Listado</a>
+    </form>
+</div>

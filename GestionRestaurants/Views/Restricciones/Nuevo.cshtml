@@ -1,0 +1,35 @@
+﻿@model GestionRestaurants.Models.RestriccionDeReserva
+
+@{
+    ViewData["Title"] = "Nueva Restriccion";
+}
+
+<h2>Nueva Restriccion  de reserva de Restaurant</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Nuevo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RestaurantId" class="control-label">Restaurant</label>
+                <select asp-for="RestaurantId" class="form-control" asp-items="ViewBag.RestaurantId"></select>
+                <span asp-validation-for="RestaurantId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DisponibilidadDeMesa" class="control-label"></label>
+                <input asp-for="DisponibilidadDeMesa" class="form-control" />
+                <span asp-validation-for="DisponibilidadDeMesa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-success" />
+                <a class="btn btn-default" asp-action="Index">Listado</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
