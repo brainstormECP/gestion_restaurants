@@ -22,5 +22,9 @@ namespace GestionRestaurants.Models
         public virtual Restaurant Restaurant { get; set; }
 
         public string Habitacion { get; set; }
+
+        public string UsuarioId { get; set; }
+
+        public virtual Usuario Usuario { get; set; }
     }
 }
