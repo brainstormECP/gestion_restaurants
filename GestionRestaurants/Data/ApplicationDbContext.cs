@@ -24,5 +24,9 @@ namespace GestionRestaurants.Data
         }
 
         public DbSet<GestionRestaurants.Models.Restaurant> Restaurant { get; set; }
+
+        public DbSet<GestionRestaurants.Models.Reserva> Reserva { get; set; }
+
+        public DbSet<GestionRestaurants.Models.HorarioDeReserva> HorarioDeReserva { get; set; }
     }
 }

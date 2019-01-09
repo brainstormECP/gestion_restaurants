@@ -1,0 +1,50 @@
+﻿@model GestionRestaurants.Models.Reserva
+
+@{
+    ViewData["Title"] = "Eliminar Reserva";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Esta seguro que quiere eliminar la reserva?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+        <dd>
+            @Model.Fecha.ToShortDateString()
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Restaurant)
+        </dt>
+        <dd>
+            @Model.Restaurant.Nombre
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Hora)
+        </dt>
+        <dd>
+            @Model.Hora.Hora.ToString()
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Habitacion)
+        </dt>
+        <dd>
+            @Model.Habitacion
+        </dd>
+        <dt>
+            Cantidad de personas
+        </dt>
+        <dd>
+            @Model.CantidadDePersonas
+        </dd>
+    </dl>
+    
+    <form asp-action="Eliminar">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a class="btn btn-default" asp-action="Index">Listado</a>
+    </form>
+</div>

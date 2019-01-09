@@ -1,0 +1,43 @@
+﻿@model IEnumerable<GestionRestaurants.ViewModels.ReservaViewModel>
+
+@{
+    ViewData["Title"] = "Reservas";
+}
+
+<h2>Listado de reservas</h2>
+
+<p>
+    <a class="btn btn-success" asp-action="Nuevo">Nueva</a>
+</p>
+<div class="row">
+    @foreach (var grupo in Model.GroupBy(m => m.Fecha))
+    {
+        <div class="col-md-2" style="margin:0;padding:0;" *ngFor="let reserva of reservas">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-center">@grupo.Key.ToShortDateString()</h3>
+                </div>
+                <div class="panel-body">
+                    @foreach (var item in grupo)
+                    {
+                        <div class="list-group">
+                            <h4 class="list-group-item-heading">@item.Restaurant</h4>
+                            @foreach (var horas in item.Detalles)
+                            {
+                                <h5>@horas.Hora</h5>
+                                @foreach (var reserva in horas.Reservas)
+                                {
+                                    <p class="list-group-item-text">
+                                        Habitacion @reserva.Habitacion, Pax : @reserva.Pax
+                                        <a asp-action="Eliminar" asp-route-id="@reserva.ReservaId"><i class="glyphicon glyphicon-trash"></i></a>
+                                    </p>
+                                }
+                            }
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
