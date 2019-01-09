@@ -1,0 +1,64 @@
+﻿@model IEnumerable<GestionRestaurants.ViewModels.UsuarioViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Usuarios";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a class="btn btn-success" asp-action="Nuevo">Nuevo</a>
+</p>
+@if (TempData["error"] != null)
+{
+<p class="alert alert-danger">@TempData["error"]</p>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table dynamic">
+            <thead>
+                <tr>
+                    <th class="col-md-2">Nombre</th>
+                    <th class="col-md-4">Roles</th>
+                    <th class="col-md-2">Usuario</th>
+                    <th class="col-md-4"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuario in Model)
+                {
+                <tr>
+                    <td>@usuario.Nombre</td>
+                    <td>
+                        @foreach (var rol in usuario.Roles)
+                        {
+                            <span class="badge">@rol</span>
+                        }
+                    </td>
+                    <td>@usuario.Usuario.Split("@")[0]</td>
+                    <td>
+                        @if (usuario.Usuario.Split("@")[0] != "admin")
+                        {
+                            <a class="btn btn-info" asp-action="EditarRoles" asp-route-usuarioId="@usuario.Id">Editar</a>
+                            <a class="btn btn-primary" asp-action="ResetPassword" asp-route-usuarioId="@usuario.Id">Cambiar Contraseña</a>
+                            @if (usuario.Activo)
+                            {
+                                <a class="btn btn-danger" asp-action="Activar" asp-route-usuarioId="@usuario.Id">Desactivar</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success" asp-action="Activar" asp-route-usuarioId="@usuario.Id">Activar</a>
+                            }
+                        }
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

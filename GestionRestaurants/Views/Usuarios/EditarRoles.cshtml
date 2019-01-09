@@ -1,0 +1,31 @@
+﻿@model GestionRestaurants.ViewModels.UsuarioViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Editar Roles";
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="EditarRoles" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nombre">Nombre de usuario</label>
+                <input asp-for="Nombre" class="form-control" disabled />
+                <input type="hidden" asp-for="Id" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Roles"></label>
+                <select class="form-control select" asp-for="Roles" multiple asp-items="ViewBag.Roles"></select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <a asp-action="Usuarios" class="btn btn-default">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

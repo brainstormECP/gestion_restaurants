@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using GestionRestaurants.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestionRestaurants.Areas.Identity.Pages.Account
 {
@@ -18,11 +19,13 @@ namespace GestionRestaurants.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<Usuario> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly DbContext _db;
 
-        public LoginModel(SignInManager<Usuario> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<Usuario> signInManager, ILogger<LoginModel> logger, DbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _db = context;
         }
 
         [BindProperty]
@@ -70,7 +73,18 @@ namespace GestionRestaurants.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email + "@patriarca.cu", Input.Password, false, lockoutOnFailure: true);
+                var user = _db.Set<Usuario>().FirstOrDefault(u => u.UserName.StartsWith(Input.Email));
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Este usuario no existe.");
+                    return Page();
+                }
+                if (!user.Activo)
+                {
+                    ModelState.AddModelError(string.Empty, "Este usuario no esta activo.");
+                    return Page();
+                }
+                var result = await _signInManager.PasswordSignInAsync(Input.Email + "@restaurant.cu", Input.Password, false, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -78,7 +92,7 @@ namespace GestionRestaurants.Areas.Identity.Pages.Account
                 }                
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Intento de autenticacion incorrecto.");
                     return Page();
                 }
             }
