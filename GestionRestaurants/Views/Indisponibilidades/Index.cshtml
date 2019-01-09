@@ -1,0 +1,46 @@
+﻿@model IEnumerable<GestionRestaurants.Models.IndisponibilidadRestaurant>
+
+@{
+    ViewData["Title"] = "Indisponibilidades";
+}
+
+<h2>Listado de indisponibilidades de Restaurant</h2>
+
+<p>
+    <a class="btn btn-success" asp-action="Nuevo">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Restaurant)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaFin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Restaurant.Nombre)
+            </td>
+            <td>
+                <a class="btn btn-info" asp-action="Editar" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
+                <a class="btn btn-danger" asp-action="Eliminar" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

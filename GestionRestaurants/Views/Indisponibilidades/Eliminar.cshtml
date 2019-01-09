@@ -1,0 +1,38 @@
+﻿@model GestionRestaurants.Models.IndisponibilidadRestaurant
+
+@{
+    ViewData["Title"] = "Eliminar Indisponibilidad de Restaurant";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Esta seguro que quiere eliminar la indisponibilidad?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaFin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaFin)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Restaurant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Restaurant.Nombre)
+        </dd>
+    </dl>
+    
+    <form asp-action="Eliminar">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-default" asp-action="Index">Listado</a>
+    </form>
+</div>
