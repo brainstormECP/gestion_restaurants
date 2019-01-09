@@ -26,6 +26,7 @@ namespace GestionRestaurants.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Nuevo(Restaurant restaurant)
         {
             if (ModelState.IsValid)
@@ -43,6 +44,7 @@ namespace GestionRestaurants.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Editar(Restaurant restaurant)
         {
             if (ModelState.IsValid)
@@ -59,7 +61,9 @@ namespace GestionRestaurants.Controllers
             return View(_db.Set<Restaurant>().SingleOrDefault(r => r.Id == id));
         }
 
-        public IActionResult Delete(int id)
+        [HttpPost, ActionName("Eliminar")]
+        [ValidateAntiForgeryToken]
+        public IActionResult EliminarConfirmed(int id)
         {
             try
             {
