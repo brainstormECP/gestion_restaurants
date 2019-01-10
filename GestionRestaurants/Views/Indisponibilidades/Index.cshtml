@@ -21,6 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Restaurant)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observaciones)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -35,6 +38,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Restaurant.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observaciones)
             </td>
             <td>
                 <a class="btn btn-info" asp-action="Editar" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>

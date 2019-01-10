@@ -55,7 +55,7 @@ namespace GestionRestaurants.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Nuevo([Bind("Id,FechaInicio,FechaFin,RestaurantId")] IndisponibilidadRestaurant indisponibilidad)
+        public async Task<IActionResult> Nuevo([Bind("Id,FechaInicio,FechaFin,RestaurantId,Observaciones")] IndisponibilidadRestaurant indisponibilidad)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace GestionRestaurants.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(int id, [Bind("Id,FechaInicio,FechaFin,RestaurantId")] IndisponibilidadRestaurant indisponibilidad)
+        public async Task<IActionResult> Editar(int id, [Bind("Id,FechaInicio,FechaFin,RestaurantId,Observaciones")] IndisponibilidadRestaurant indisponibilidad)
         {
             if (id != indisponibilidad.Id)
             {
