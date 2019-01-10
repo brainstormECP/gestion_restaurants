@@ -16,8 +16,14 @@ namespace GestionRestaurants.Utiles
             _db = context;
         }
 
-        public bool SePuedeReservar(Reserva reserva)
+        public ValidationResult SePuedeReservar(Reserva reserva)
         {
+            var indisponibilidades = _db.Set<IndisponibilidadRestaurant>()
+                .Where(i => i.RestaurantId == reserva.RestaurantId && i.FechaInicio <= reserva.Fecha && i.FechaFin >= reserva.Fecha);
+            if (indisponibilidades.Any())
+            {
+                return new ValidationResult { Succeded = false, Descripcion = "El restaurant no esta disponible en la fecha por " + indisponibilidades.FirstOrDefault().Observaciones };
+            }
             var reservas = _db.Set<Reserva>()
                 .Where(r => r.Fecha == reserva.Fecha && r.HoraId == reserva.HoraId && r.RestaurantId == reserva.RestaurantId)
                 .OrderBy(r => r.CantidadDePersonas)
@@ -55,7 +61,7 @@ namespace GestionRestaurants.Utiles
             //2. se pueden poner en una sola mesa pero sobran sillas
             //3. se pueden distribuir en varias mesas exactamente
             //4. se pueden distribuir en varias mesas y sobran sillas
-            return true;
+            return new ValidationResult { Succeded = true };
         }
     }
 }

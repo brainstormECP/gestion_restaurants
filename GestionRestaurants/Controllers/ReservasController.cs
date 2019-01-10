@@ -1,4 +1,5 @@
 ﻿using GestionRestaurants.Models;
+using GestionRestaurants.Utiles;
 using GestionRestaurants.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -83,9 +84,15 @@ namespace GestionRestaurants.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Add(reserva);
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var reservaHelper = new ReservaHelper(_db);
+                var result = reservaHelper.SePuedeReservar(reserva);
+                if (result.Succeded)
+                {
+                    _db.Add(reserva);
+                    await _db.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ModelState.AddModelError("Fecha", result.Descripcion);
             }
             ViewData["HoraId"] = new SelectList(_db.Set<HorarioDeReserva>(), "Id", "Hora", reserva.HoraId);
             ViewData["RestaurantId"] = new SelectList(_db.Set<Restaurant>(), "Id", "Nombre", reserva.RestaurantId);
